@@ -54,19 +54,19 @@ class DataTransformation:
             test_data = pd.read_csv(test_data_path)
             preprocessor = self.get_preprocessor()
             target = 'math score'
-            train_data_target = train_data[[target]]
-            test_data_target = test_data[[target]]
+            train_data_target = train_data[[target]].to_numpy()
+            test_data_target = test_data[[target]].to_numpy()
+    
             train_data.drop(target,axis=1,inplace = True)
             test_data.drop(target,axis=1, inplace = True)
 
             train_data_arr = preprocessor.fit_transform(train_data)
-            test_data_arr = preprocessor.fit(test_data)
+            test_data_arr = preprocessor.transform(test_data)
             save_obj(preprocessor,self.DataTranformation_Config.preprocessor_path)
-
             logging.info("Preprocessing has been completed")
 
-            train_data_arr = np.concatenate((train_data,train_data_target),axis=1)
-            test_data_arr = np.concatenate((test_data,test_data_target),axis=1)
+            train_data_arr = np.concatenate([train_data_arr,train_data_target],axis=1)
+            test_data_arr = np.concatenate([test_data_arr,test_data_target],axis=1)
 
             logging.info('Concatenation has been done')
 

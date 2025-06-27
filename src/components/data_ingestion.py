@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
 import pandas as pd
 from src.components.data_tranformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 
 @dataclass 
 class DataIngestionConfig:
@@ -43,3 +44,6 @@ if __name__ == '__main__':
     train_data_path, test_data_path = obj.initiate_data_ingestion()
     transformer_obj = DataTransformation()
     train_data_arr , test_data_arr = transformer_obj.data_transformation(train_data_path,test_data_path)
+    ModelTrainer_obj = ModelTrainer()
+    ModelTrainer_obj.trainModels(train_data_arr,test_data_arr)
+    
